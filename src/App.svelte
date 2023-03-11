@@ -41,7 +41,8 @@
 </script>
 
 <main>
-    <h1 class="title is-1">Generate ai images, for FREE!</h1>
+    <h1 class="title is-1">GenerateX</h1>
+    <h1 class="title is-3">Generate ai images, for FREE!</h1>
     {#if submitted}
         {#await promsie}
             <h1 class="title is-1">Loading</h1>
