@@ -2,6 +2,7 @@
     let input;
     let submitted = false;
     let promsie;
+    let dlUrl
     import { HfInference } from '@huggingface/inference'
 
 
@@ -23,9 +24,17 @@
             model: 'stabilityai/stable-diffusion-2',
         })
         const blob = new Blob([res])
-        console.log(blob)
         const url = URL.createObjectURL(blob)
         return url
+    }
+
+    function downloadImg(blob){
+        dlUrl.download = "img.jpg"
+        dlUrl.href = blob
+        setTimeout(function() {
+          URL.revokeObjectURL(dlUrl.href);
+          dlUrl.href = '#';
+        }, 10000);
     }
     
     promsie = createImage(undefined)
@@ -39,6 +48,11 @@
         {:then data} 
             <div id="form-div-2">
                 <img src={data} width="500" height="500" alt="Generated from ai"/>
+            </div>
+            <div id="form-div-2">
+                <a href="/" class="button is-info is-outlined" bind:this={dlUrl} on:click={() => {
+                    downloadImg(data)
+                }}>Download File</a>
             </div>
         {/await}
     {/if}
@@ -63,6 +77,7 @@
         margin-top: 2rem;
     }
 
+
     #form-div{
         display: flex;
         justify-content: center;
@@ -74,6 +89,7 @@
         justify-content: center;
         align-items: center;
         margin-top: 2rem;
+        margin-bottom: 2rem;
     }
 
     #form{
